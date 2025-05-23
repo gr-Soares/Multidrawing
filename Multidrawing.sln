@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.36105.23 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultidrawingService", "MultidrawingService\MultidrawingService.csproj", "{861BD96E-9471-4AEF-841F-71456586EA72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultidrawingServer", "MultidrawingServer\MultidrawingServer.csproj", "{A44CB5F2-FA97-4DC1-B999-01349805F958}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultidrawingClient", "MultidrawingClient\MultidrawingClient.csproj", "{9B9F72ED-D12C-4B33-8E10-43DE1D218814}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{861BD96E-9471-4AEF-841F-71456586EA72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{861BD96E-9471-4AEF-841F-71456586EA72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{861BD96E-9471-4AEF-841F-71456586EA72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{861BD96E-9471-4AEF-841F-71456586EA72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A44CB5F2-FA97-4DC1-B999-01349805F958}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A44CB5F2-FA97-4DC1-B999-01349805F958}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A44CB5F2-FA97-4DC1-B999-01349805F958}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A44CB5F2-FA97-4DC1-B999-01349805F958}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B9F72ED-D12C-4B33-8E10-43DE1D218814}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B9F72ED-D12C-4B33-8E10-43DE1D218814}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B9F72ED-D12C-4B33-8E10-43DE1D218814}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B9F72ED-D12C-4B33-8E10-43DE1D218814}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D5E7188F-A4A9-449A-A344-8BD094BAB199}
+	EndGlobalSection
+EndGlobal
