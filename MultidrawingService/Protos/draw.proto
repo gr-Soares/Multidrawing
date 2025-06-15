@@ -1,0 +1,33 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "MultidrawingService";
+
+package draw;
+
+message Draw {
+    repeated Path path = 1;
+}
+
+message Path {
+    int32 x = 1;
+    int32 y = 2;
+}
+
+message SendDrawRequest {
+    repeated Draw DrawPath = 1;
+}
+
+message SendDrawResponse {
+}
+
+message ReceiveDrawRequest {
+}
+
+message ReceiveDrawResponse {
+    repeated Draw DrawPath = 1;
+}
+
+service DrawGreeter {
+    rpc ReceiveDraw (ReceiveDrawRequest) returns (ReceiveDrawResponse);
+    rpc SendDraw (SendDrawRequest) returns (SendDrawResponse);
+}
