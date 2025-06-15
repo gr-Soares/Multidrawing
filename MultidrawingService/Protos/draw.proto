@@ -5,16 +5,17 @@ option csharp_namespace = "MultidrawingService";
 package draw;
 
 message Draw {
-    repeated Path path = 1;
+    int32 id = 1;
+    repeated Path path = 2;
 }
 
 message Path {
-    int32 x = 1;
-    int32 y = 2;
+    float x = 1;
+    float y = 2;
 }
 
 message SendDrawRequest {
-    repeated Draw DrawPath = 1;
+    Draw DrawPath = 1;
 }
 
 message SendDrawResponse {
@@ -27,7 +28,15 @@ message ReceiveDrawResponse {
     repeated Draw DrawPath = 1;
 }
 
+message RemoveDrawRequest {
+    int32 id = 1;
+}
+
+message RemoveDrawResponse {
+}
+
 service DrawGreeter {
     rpc ReceiveDraw (ReceiveDrawRequest) returns (ReceiveDrawResponse);
+    rpc RemoveDraw (RemoveDrawRequest) returns (RemoveDrawResponse);
     rpc SendDraw (SendDrawRequest) returns (SendDrawResponse);
 }

@@ -9,7 +9,7 @@ namespace MultidrawingService
 
         public override Task<SendDrawResponse> SendDraw(SendDrawRequest request, ServerCallContext context)
         {
-            draws.AddRange(request.DrawPath);
+            draws.Add(request.DrawPath);
 
             var response = new SendDrawResponse();
             return Task.FromResult(response);
@@ -19,6 +19,22 @@ namespace MultidrawingService
         {
             var response = new ReceiveDrawResponse();
             response.DrawPath.AddRange(draws);
+            return Task.FromResult(response);
+        }
+
+        public override Task<RemoveDrawResponse> RemoveDraw(RemoveDrawRequest request, ServerCallContext context)
+        {
+            
+            for(int i = 0; i < draws.Count; i++)
+            {
+                if (draws[i].Id == request.Id)
+                {
+                    draws.RemoveAt(i);
+                    break;
+                }
+            }
+
+            var response = new RemoveDrawResponse();
             return Task.FromResult(response);
         }
     }

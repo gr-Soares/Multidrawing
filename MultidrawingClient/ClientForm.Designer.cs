@@ -28,11 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ClientForm));
             Canva = new Panel();
             toolStrip1 = new ToolStrip();
             btPen = new ToolStripButton();
             btErase = new ToolStripButton();
+            timer1 = new System.Windows.Forms.Timer(components);
             Canva.SuspendLayout();
             toolStrip1.SuspendLayout();
             SuspendLayout();
@@ -42,8 +44,9 @@
             Canva.Controls.Add(toolStrip1);
             Canva.Dock = DockStyle.Fill;
             Canva.Location = new Point(0, 0);
+            Canva.Margin = new Padding(3, 2, 3, 2);
             Canva.Name = "Canva";
-            Canva.Size = new Size(733, 471);
+            Canva.Size = new Size(641, 353);
             Canva.TabIndex = 0;
             Canva.Paint += Canva_Paint;
             Canva.MouseDown += Canva_MouseDown;
@@ -56,7 +59,7 @@
             toolStrip1.Items.AddRange(new ToolStripItem[] { btPen, btErase });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
-            toolStrip1.Size = new Size(733, 27);
+            toolStrip1.Size = new Size(641, 27);
             toolStrip1.TabIndex = 0;
             toolStrip1.Text = "toolStrip1";
             // 
@@ -66,7 +69,7 @@
             btPen.Image = (Image)resources.GetObject("btPen.Image");
             btPen.ImageTransparentColor = Color.Magenta;
             btPen.Name = "btPen";
-            btPen.Size = new Size(29, 24);
+            btPen.Size = new Size(24, 24);
             btPen.Text = "btPen";
             btPen.Click += btPen_Click;
             // 
@@ -76,16 +79,17 @@
             btErase.Image = (Image)resources.GetObject("btErase.Image");
             btErase.ImageTransparentColor = Color.Magenta;
             btErase.Name = "btErase";
-            btErase.Size = new Size(29, 24);
+            btErase.Size = new Size(24, 24);
             btErase.Text = "brErase";
             btErase.Click += btErase_Click;
             // 
             // ClientForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(733, 471);
+            ClientSize = new Size(641, 353);
             Controls.Add(Canva);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "ClientForm";
             Text = "Multidrawing";
             Canva.ResumeLayout(false);
@@ -101,5 +105,6 @@
         private ToolStrip toolStrip1;
         private ToolStripButton btPen;
         private ToolStripButton btErase;
+        private System.Windows.Forms.Timer timer1;
     }
 }

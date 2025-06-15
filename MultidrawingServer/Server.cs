@@ -35,9 +35,8 @@ namespace MultidrawingServer
                 })
                 .Build();
 
-            _ = host.RunAsync();
-
             Console.WriteLine("Multidrawing Server is running...");
+            host.Run();
         }
     }
 }

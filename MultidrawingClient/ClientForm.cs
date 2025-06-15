@@ -1,23 +1,70 @@
+using Grpc.Net.Client;
+using MultidrawingService;
 using System.Drawing.Drawing2D;
 
 namespace MultidrawingClient
 {
     public partial class ClientForm : Form
     {
-        List<GraphicsPath> paths;
+        List<GraphicsPath> remote_paths;
+
+        List<Draw> original;
+
         GraphicsPath path;
 
         bool isPen;
         bool isEraser;
 
+        GrpcChannel channel;
+        DrawGreeter.DrawGreeterClient client;
+
         public ClientForm()
         {
             InitializeComponent();
 
-            paths = new List<GraphicsPath>();
+            remote_paths = new List<GraphicsPath>();
+
+            original = new List<Draw>();
+
             isPen = false;
 
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
+
+            InitializeGrpcClient();
+
+            timer1.Tick += Timer1_Tick;
+            timer1.Interval = 500;
+
+            timer1.Start();
+        }
+
+        private void Timer1_Tick(object? sender, EventArgs e)
+        {
+            var response = client.ReceiveDraw(new ReceiveDrawRequest());
+
+            remote_paths.Clear();
+            original.Clear();
+
+            remote_paths.AddRange(response.DrawPath.Select(p => 
+            {
+                var graphicsPath = new GraphicsPath();
+                foreach (var point in p.Path)
+                {
+                    graphicsPath.AddLine(new PointF(point.X, point.Y), new PointF(point.X, point.Y));
+                }
+                return graphicsPath;
+            }));
+
+            original.AddRange(response.DrawPath);
+
+            Canva.Refresh();
+            Canva.Invalidate();
+        }
+
+        private void InitializeGrpcClient()
+        {
+            channel = GrpcChannel.ForAddress("http://localhost:5001");
+            client = new DrawGreeter.DrawGreeterClient(channel);
         }
 
         private void Canva_MouseMove(object sender, MouseEventArgs e)
@@ -42,10 +89,11 @@ namespace MultidrawingClient
 
             var g = e.Graphics;
             Pen myp = new Pen(System.Drawing.Color.Black, 4);
+            Pen mypR = new Pen(System.Drawing.Color.Red, 4);
 
-            foreach (var p in paths)
+            foreach (var p in remote_paths)
             {
-                g.DrawPath(myp, p);
+                g.DrawPath(mypR, p);
             }
 
             g.DrawPath(myp, path);
@@ -62,11 +110,17 @@ namespace MultidrawingClient
 
             if (e.Button == MouseButtons.Left && isEraser)
             {
-                foreach(var p in paths)
+                foreach(var p in remote_paths)
                 {
                     if (p.IsVisible(e.Location))
                     {
-                        paths.Remove(p);
+                        remote_paths.Remove(p);
+
+                        var response = client.RemoveDraw(new RemoveDrawRequest
+                        {
+                            Id = original.FirstOrDefault(d => d.Path.SequenceEqual(p.PathPoints.Select(pp => new MultidrawingService.Path() { X = pp.X, Y = pp.Y })))?.Id ?? 0
+                        });
+
                         Canva.Refresh();
                         Canva.Invalidate();
                         return;
@@ -79,7 +133,20 @@ namespace MultidrawingClient
         {
             if (e.Button == MouseButtons.Left && isPen)
             {
-                paths.Add(path);
+                var drawPath = new Draw();
+
+                foreach(var p in path.PathPoints)
+                {
+                    drawPath.Path.Add(new MultidrawingService.Path() { X = p.X, Y=p.Y});
+                }
+
+                drawPath.Id = remote_paths.Count + 1;
+
+                var response = client.SendDraw(new SendDrawRequest
+                {
+                    DrawPath = drawPath
+                });
+
                 path = new GraphicsPath();
             }
         }
